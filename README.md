@@ -18,7 +18,7 @@ import (
 	"time"
 
 	"github.com/dreamsxin/go-gin/cache"
-	"github.com/dreamsxin/go-gin/persist"
+	"github.com/dreamsxin/go-gin/cache/persist"
 	"github.com/gin-gonic/gin"
 )
 
