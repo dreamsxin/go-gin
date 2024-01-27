@@ -20,7 +20,7 @@ func main() {
 		},
 	)
 
-	if err := app.Run(":8080"); err != nil {
+	if err := app.Run("localhost:8080"); err != nil {
 		panic(err)
 	}
 }
