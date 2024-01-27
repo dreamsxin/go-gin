@@ -16,13 +16,15 @@ func TokenBucketLimiter(buckLockType int, limit, num int32, dur time.Duration) g
 		b = bucket.GetBucketCAS(limit, num, time.NewTicker(dur))
 	case bucket.LOCKTYPE_MUTEX:
 		b = bucket.GetBucketMutex(limit, num, time.NewTicker(dur))
+	case bucket.LOCKTYPE_IP:
+		b = bucket.GetBucketIP(limit, num, time.NewTicker(dur))
 	}
-	return func(context *gin.Context) {
-		if ok := b.GetToken(); !ok {
-			context.Status(http.StatusServiceUnavailable)
-			context.Abort()
+	return func(c *gin.Context) {
+		if ok := b.GetToken(c); !ok {
+			c.Status(http.StatusServiceUnavailable)
+			c.Abort()
 		} else {
-			context.Next()
+			c.Next()
 		}
 	}
 }

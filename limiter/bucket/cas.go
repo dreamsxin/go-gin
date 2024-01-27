@@ -4,6 +4,8 @@ import (
 	"sync"
 	"sync/atomic"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 type TokenBucketCAS struct {
@@ -52,7 +54,7 @@ func (bucketCAS *TokenBucketCAS) AddToken() {
 	atomic.AddInt32(&(bucketCAS.num), 1)
 }
 
-func (bucketCAS *TokenBucketCAS) GetToken() bool {
+func (bucketCAS *TokenBucketCAS) GetToken(c *gin.Context) bool {
 	for {
 		oldVal := atomic.LoadInt32(&(bucketCAS.num))
 		if oldVal <= 0 {

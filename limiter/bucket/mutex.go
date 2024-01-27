@@ -3,6 +3,8 @@ package bucket
 import (
 	"sync"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 type TokenBucketMutex struct {
@@ -48,7 +50,7 @@ func GetBucketMutex(limit, num int32, ticker *time.Ticker) *TokenBucketMutex {
 	return bucket
 }
 
-func (bucket *TokenBucketMutex) GetToken() bool {
+func (bucket *TokenBucketMutex) GetToken(c *gin.Context) bool {
 	if bucket.num > 0 {
 		bucket.mu.Lock()
 		defer bucket.mu.Unlock()

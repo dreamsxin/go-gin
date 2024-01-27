@@ -13,9 +13,10 @@ func main() {
 
 	r := gin.Default()
 
-	r.Use(gin.Recovery(), gin.Logger())
+	//r.Use(gin.Recovery(), gin.Logger())
 	//r.Use(limiter.TokenBucketLimiter(bucket.LOCKTYPE_CAS, 100, 100, time.Millisecond))
-	r.Use(limiter.TokenBucketLimiter(bucket.LOCKTYPE_MUTEX, 100, 1, time.Millisecond))
+	//r.Use(limiter.TokenBucketLimiter(bucket.LOCKTYPE_MUTEX, 100, 1, time.Millisecond))
+	r.Use(limiter.TokenBucketLimiter(bucket.LOCKTYPE_IP, 1, 1, time.Millisecond))
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "pong",
